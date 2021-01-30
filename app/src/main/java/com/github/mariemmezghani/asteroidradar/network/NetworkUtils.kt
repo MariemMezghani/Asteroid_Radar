@@ -1,4 +1,4 @@
-package com.github.mariemmezghani.asteroidradar.api
+package com.github.mariemmezghani.asteroidradar.network
 
 import com.github.mariemmezghani.asteroidradar.Asteroid
 import com.github.mariemmezghani.asteroidradar.Constants

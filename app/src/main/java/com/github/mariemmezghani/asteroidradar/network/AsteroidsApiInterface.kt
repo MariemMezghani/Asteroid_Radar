@@ -1,15 +1,9 @@
-package com.github.mariemmezghani.asteroidradar.api
+package com.github.mariemmezghani.asteroidradar.network
 
-import com.github.mariemmezghani.asteroidradar.Asteroid
 import com.github.mariemmezghani.asteroidradar.Constants
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import okhttp3.ResponseBody
-import org.json.JSONObject
-import retrofit2.Call
-import retrofit2.Response
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.GET
 
