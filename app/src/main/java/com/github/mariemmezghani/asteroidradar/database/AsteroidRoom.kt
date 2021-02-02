@@ -10,27 +10,19 @@ abstract class AsteroidRoom : RoomDatabase() {
 
     abstract val dao: AsteroidDAO
 
-    companion object {
+}
 
-        @Volatile
-        private var INSTANCE: AsteroidRoom? = null
+private lateinit var INSTANCE: AsteroidRoom
 
-        fun getInstance(context: Context): AsteroidRoom {
-            synchronized(this) {
-                var instance = INSTANCE
-
-                if (instance == null) {
-                    instance = Room.databaseBuilder(
-                        context.applicationContext,
-                        AsteroidRoom::class.java,
-                        "asteroids"
-                    )
-                        .fallbackToDestructiveMigration()
-                        .build()
-                    INSTANCE = instance
-                }
-                return instance
-            }
+fun getDatabase(context: Context): AsteroidRoom {
+    synchronized(AsteroidRoom::class.java) {
+        if (!::INSTANCE.isInitialized) {
+            INSTANCE = Room.databaseBuilder(
+                context.applicationContext,
+                AsteroidRoom::class.java,
+                "videos"
+            ).build()
         }
     }
+    return INSTANCE
 }

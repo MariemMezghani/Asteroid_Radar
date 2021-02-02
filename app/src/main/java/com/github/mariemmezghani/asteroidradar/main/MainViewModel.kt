@@ -1,17 +1,21 @@
 package com.github.mariemmezghani.asteroidradar.main
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.*
 import com.github.mariemmezghani.asteroidradar.network.AsteroidsApi
 import com.github.mariemmezghani.asteroidradar.network.parseAsteroidsJsonResult
 import org.json.JSONObject
-import androidx.lifecycle.viewModelScope
 import com.github.mariemmezghani.asteroidradar.Asteroid
+import com.github.mariemmezghani.asteroidradar.database.AsteroidRoom
+import com.github.mariemmezghani.asteroidradar.database.getDatabase
+import com.github.mariemmezghani.asteroidradar.repository.AsteroidsRepository
 import kotlinx.coroutines.launch
 
 
-class MainViewModel : ViewModel() {
+class MainViewModel(application: Application) : AndroidViewModel(application) {
+    private val database = getDatabase(application)
+    private val repository = AsteroidsRepository(database)
+    private val asteroids = repository.asteroids
 
     // The internal MutableLiveData that stores the List of Asteroids
     private val _response = MutableLiveData<List<Asteroid>>()
@@ -24,8 +28,8 @@ class MainViewModel : ViewModel() {
     private val _status = MutableLiveData<String>()
 
     // The external immutable LiveData for the request status String
-    val status : LiveData<String>
-        get()= _status
+    val status: LiveData<String>
+        get() = _status
 
     /**
      * Call getData() on init so we can display status immediately.
@@ -34,17 +38,11 @@ class MainViewModel : ViewModel() {
         getData()
     }
 
-    private fun getData() {
+    fun getData() {
         viewModelScope.launch {
-            try {
-                var result = AsteroidsApi.retrofitService.getProperties()
-                val json = JSONObject(result)
-                _response.value = parseAsteroidsJsonResult(json)
-            } catch (e: Exception) {
-                _status.value = "Failure: " + e.message
-
-            }
+            repository.refreshAsteroids()
 
         }
     }
+
 }
