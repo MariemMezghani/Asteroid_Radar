@@ -3,8 +3,6 @@ package com.github.mariemmezghani.asteroidradar.network
 import com.github.mariemmezghani.asteroidradar.Constants
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import kotlinx.coroutines.Deferred
-import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.GET
@@ -17,7 +15,7 @@ private val retrofit = Retrofit.Builder()
 
 interface AsteroidsApiInterface {
     @GET("neo/rest/v1/feed?api_key=${Constants.API_KEY}")
-    fun getAsteroids(): String
+    suspend fun getAsteroids(): String
 }
 
 object AsteroidsApi {
