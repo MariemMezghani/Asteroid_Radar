@@ -20,7 +20,7 @@ class AsteroidAdapter:ListAdapter<Asteroid, AsteroidAdapter.AsteroidViewHolder>(
     }
     class AsteroidViewHolder ( private var binding: AsteroidItemViewBinding): RecyclerView.ViewHolder(binding.root){
             fun bind(asteroid:Asteroid){
-                binding.asteroid=asteroid
+                binding.oneAsteroid=asteroid
                 binding.executePendingBindings()
 
             }

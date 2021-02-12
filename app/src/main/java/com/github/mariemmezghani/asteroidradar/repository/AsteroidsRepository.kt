@@ -1,5 +1,6 @@
 package com.github.mariemmezghani.asteroidradar.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.github.mariemmezghani.asteroidradar.Asteroid
@@ -21,12 +22,12 @@ class AsteroidsRepository(private val database: AsteroidRoom) {
     ) { it.asDomainModel() }
 
     suspend fun refreshAsteroids() {
-        withContext(Dispatchers.IO) {
-            val result = AsteroidsApi.retrofitService.getAsteroids()
-            val json = JSONObject(result)
-            val asteroids =
-                parseAsteroidsJsonResult(json)
-            database.dao.insert(*asteroids.asDatabaseModel())
+            withContext(Dispatchers.IO) {
+                val result = AsteroidsApi.retrofitService.getAsteroids()
+                val json = JSONObject(result)
+                val asteroids =
+                    parseAsteroidsJsonResult(json)
+                database.dao.insert(*asteroids.asDatabaseModel())
         }
     }
 }

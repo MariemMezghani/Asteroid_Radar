@@ -3,6 +3,7 @@ package com.github.mariemmezghani.asteroidradar.main
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.github.mariemmezghani.asteroidradar.R
 import com.github.mariemmezghani.asteroidradar.databinding.FragmentMainBinding
@@ -16,10 +17,16 @@ class MainFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val binding = FragmentMainBinding.inflate(inflater)
-        binding.asteroidRecycler.adapter=AsteroidAdapter()
         binding.lifecycleOwner = this
 
         binding.viewModel = viewModel
+        val adapter = AsteroidAdapter()
+        binding.asteroidRecycler.adapter=adapter
+        viewModel.asteroids.observe(viewLifecycleOwner, Observer {
+            it?.apply {
+                adapter.submitList(it)
+            }
+        })
 
         setHasOptionsMenu(true)
 
