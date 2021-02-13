@@ -31,4 +31,16 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    private val _navigateToSelectedAsteroid = MutableLiveData<Asteroid>()
+    val navigateToSelectedAsteroid: LiveData<Asteroid>
+        get() = _navigateToSelectedAsteroid
+
+    fun displayAsteroidDetails(asteroid: Asteroid) {
+        _navigateToSelectedAsteroid.value = asteroid
+    }
+
+    fun displayAsteroidDetailsComplete() {
+        _navigateToSelectedAsteroid.value = null
+    }
+
 }
