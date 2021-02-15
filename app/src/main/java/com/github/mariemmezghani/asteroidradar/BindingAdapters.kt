@@ -4,9 +4,16 @@ package com.github.mariemmezghani.asteroidradar
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import androidx.recyclerview.widget.RecyclerView
-import com.github.mariemmezghani.asteroidradar.main.AsteroidAdapter
+import com.squareup.picasso.Picasso
 
+@BindingAdapter("image")
+fun bindPictureOfTheDay (imageView: ImageView, url:String?){
+    url?.let{
+        Picasso.get()
+            .load(url)
+            .into(imageView)
+    }
+}
 @BindingAdapter("statusIcon")
 fun bindAsteroidStatusImage(imageView: ImageView, isHazardous: Boolean) {
     if (isHazardous) {
