@@ -18,16 +18,22 @@ class AsteroidsRepository(private val database: AsteroidRoom) {
      * list of asteroids that will be displayed
      */
     val asteroids: LiveData<List<Asteroid>> = Transformations.map(
+        database.dao.getAllAsteroidsFromToday()
+    ) { it.asDomainModel() }
+    val asteroidsOfToday: LiveData<List<Asteroid>> = Transformations.map(
+        database.dao.getAllAsteroidsOfToday()
+    ) { it.asDomainModel() }
+    val savedAsteroids: LiveData<List<Asteroid>> = Transformations.map(
         database.dao.getAllAsteroids()
     ) { it.asDomainModel() }
 
     suspend fun refreshAsteroids() {
-            withContext(Dispatchers.IO) {
-                val result = AsteroidsApi.retrofitService.getAsteroids()
-                val json = JSONObject(result)
-                val asteroids =
-                    parseAsteroidsJsonResult(json)
-                database.dao.insert(*asteroids.asDatabaseModel())
+        withContext(Dispatchers.IO) {
+            val result = AsteroidsApi.retrofitService.getAsteroids()
+            val json = JSONObject(result)
+            val asteroids =
+                parseAsteroidsJsonResult(json)
+            database.dao.insert(*asteroids.asDatabaseModel())
         }
     }
 }

@@ -3,14 +3,16 @@ package com.github.mariemmezghani.asteroidradar
 
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import com.squareup.picasso.Picasso
 
 @BindingAdapter("image")
 fun bindPictureOfTheDay (imageView: ImageView, url:String?){
     url?.let{
+        val imgUri = it.toUri().buildUpon().scheme("https").build()
         Picasso.get()
-            .load(url)
+            .load(imgUri)
             .into(imageView)
     }
 }

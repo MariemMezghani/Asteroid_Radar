@@ -16,35 +16,51 @@ import kotlinx.coroutines.launch
 
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
+    // The internal MutableLiveData String that stores the most recent response status
+    private val _status = MutableLiveData<String>()
+
+    // The external immutable LiveData for the status String
+    val status: LiveData<String>
+        get() = _status
+
     private val database = getDatabase(application)
     private val repository = AsteroidsRepository(database)
     val asteroids = repository.asteroids
-private val _image=MutableLiveData<PictureOfDay>()
-    val image:LiveData<PictureOfDay>
-    get()=_image
+    val asteroidsOfToday = repository.asteroidsOfToday
+    val savedAsteroids = repository.savedAsteroids
+    private val _image = MutableLiveData<PictureOfDay>()
+    val image: LiveData<PictureOfDay>
+        get() = _image
+
     /**
      * Call getData() on init so we can display status immediately.
      */
 
     init {
         getData()
-        getImageOfTheDay()
+        //getImageOfTheDay()
     }
 
     fun getData() {
         viewModelScope.launch {
-            repository.refreshAsteroids()
+            try {
+                repository.refreshAsteroids()
+                _status.value = "Success"
+                _image.value = ImageApi.retrofitImageService.getImage()
 
+                if (image.value?.mediaType != "image") {
+                    _image.value = null
+                }
+            } catch (e: Exception) {
+                _status.value = "Failure: ${e.message}"
+            }
         }
     }
 
     private fun getImageOfTheDay() {
         viewModelScope.launch {
             try {
-                _image.value = ImageApi.retrofitImageService.getImage()
-                if (image.value?.mediaType != "image"){
-                    _image.value = null
-                }
+
 
             } catch (e: Exception) {
                 println(e.message)
