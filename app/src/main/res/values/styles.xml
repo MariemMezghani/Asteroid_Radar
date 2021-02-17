@@ -7,16 +7,19 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="textAppearanceSubtitle1">@style/CustomSubtitle1</item>
+        <item name="textAppearanceHeadline5">@style/CustomHeadline5</item>
+
     </style>
-    <!-- Title style -->
-    <style name="TextAppearance.Title" parent="TextAppearance.MaterialComponents.Headline6">
-        <item name="android:textSize">24sp</item>
-        <item name="android:textColor">@color/default_text_color</item>
-    </style>
-    <!-- subtitle style -->
-    <style name="TextAppearance.Subtitle" parent="TextAppearance.Title">
+    <style name="CustomSubtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/default_text_color</item>
+
+    </style>
+    <style name="CustomHeadline5" parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="android:textColor">@color/default_text_color</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
 
     </style>
 
