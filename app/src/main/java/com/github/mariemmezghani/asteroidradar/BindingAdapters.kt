@@ -10,9 +10,9 @@ import com.squareup.picasso.Picasso
 @BindingAdapter("image")
 fun bindPictureOfTheDay (imageView: ImageView, url:String?){
     url?.let{
-        val imgUri = it.toUri().buildUpon().scheme("https").build()
+        //val imgUri = it.toUri().buildUpon().scheme("https").build()
         Picasso.get()
-            .load(imgUri)
+            .load(url)
             .into(imageView)
     }
 }

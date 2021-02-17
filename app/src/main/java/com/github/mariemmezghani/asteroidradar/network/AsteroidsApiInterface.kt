@@ -18,6 +18,7 @@ private val retrofit = Retrofit.Builder()
 private val retrofit2 = Retrofit.Builder()
     .addConverterFactory(MoshiConverterFactory.create(moshi))
     .baseUrl(Constants.BASE_URL).build()
+
 interface AsteroidsApiInterface {
     @GET("neo/rest/v1/feed?api_key=${Constants.API_KEY}")
     suspend fun getAsteroids(): String
