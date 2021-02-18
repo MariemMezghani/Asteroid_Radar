@@ -13,16 +13,18 @@ import androidx.work.*
 import com.github.mariemmezghani.asteroidradar.worker.RefreshDataWorker
 
 
-class AsteroidsApplication: Application() {
+class AsteroidsApplication : Application() {
     val applicationScope = CoroutineScope(Dispatchers.Default)
     override fun onCreate() {
         super.onCreate()
         //Timber.plant(Timber.DebugTree())
         delayedInit()
     }
+
     private fun delayedInit() = applicationScope.launch {
         setupRecurringWork()
     }
+
     private fun setupRecurringWork() {
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.UNMETERED)
@@ -39,7 +41,8 @@ class AsteroidsApplication: Application() {
         WorkManager.getInstance().enqueueUniquePeriodicWork(
             RefreshDataWorker.WORK_NAME,
             ExistingPeriodicWorkPolicy.KEEP,
-            repeatingRequest)
+            repeatingRequest
+        )
     }
 
 }

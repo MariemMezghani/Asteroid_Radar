@@ -32,7 +32,7 @@ object AsteroidsApi {
 
 interface ImageApiInterface {
     @GET("planetary/apod?api_key=${Constants.API_KEY}")
-    suspend fun getImage():PictureOfDay
+    suspend fun getImage(): PictureOfDay
 }
 
 object ImageApi {

@@ -1,6 +1,5 @@
 package com.github.mariemmezghani.asteroidradar.repository
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.github.mariemmezghani.asteroidradar.Asteroid
