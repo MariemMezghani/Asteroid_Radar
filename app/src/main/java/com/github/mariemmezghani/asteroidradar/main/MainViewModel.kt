@@ -38,7 +38,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     init {
         getData()
-        //getImageOfTheDay()
     }
 
     fun getData() {
@@ -57,16 +56,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    private fun getImageOfTheDay() {
-        viewModelScope.launch {
-            try {
-
-
-            } catch (e: Exception) {
-                println(e.message)
-            }
-        }
-    }
 
     private val _navigateToSelectedAsteroid = MutableLiveData<Asteroid>()
     val navigateToSelectedAsteroid: LiveData<Asteroid>
